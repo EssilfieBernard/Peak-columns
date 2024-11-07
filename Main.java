@@ -5,8 +5,8 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         // Getting number of rows and columns for first matrix
-        int rows = getInput(scanner, "Enter number of rows for first matrix:");
-        int columns= getInput(scanner, "Enter number of columns for first matrix:");
+        int rows = getInput(scanner, "Enter number of rows for matrix:");
+        int columns= getInput(scanner, "Enter number of columns for matrix:");
 
         int[][] matrix = new int[rows][columns]; // initializes matrix with zeros
         matrixValues(scanner, matrix, rows, columns); // Populates the matrix with user inputs
@@ -77,6 +77,7 @@ public class Main {
 
         return minimum;
     }
+
 
     // helper function to check if a value is maximum in its row
     private static boolean isMaximumInRow(int[] array, int value) {
