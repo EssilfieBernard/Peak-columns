@@ -9,7 +9,7 @@ public class Main {
         int columns= getInput(scanner, "Enter number of columns for first matrix:");
 
         int[][] matrix = new int[rows][columns]; // initializes matrix with zeros
-        matrixValues(scanner, matrix, rows, columns);
+        matrixValues(scanner, matrix, rows, columns); // Populates the matrix with user inputs
 
         printPeakColumns(matrix);
 
