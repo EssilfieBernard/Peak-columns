@@ -5,14 +5,40 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         // Getting number of rows and columns for first matrix
-        int rows = getInput(scanner, "Enter number of rows for matrix:");
-        int columns= getInput(scanner, "Enter number of columns for matrix:");
+        int rows = checkDimensionValidity(scanner, "Enter number of rows for matrix:");
+
+        int columns= checkDimensionValidity(scanner, "Enter number of columns for matrix:");
+
+        if (rows <= 0 || columns <= 0) {
+            System.out.println("Matrix dimensions must be positive integers.");
+            return;
+        }
 
         int[][] matrix = new int[rows][columns]; // initializes matrix with zeros
         matrixValues(scanner, matrix, rows, columns); // Populates the matrix with user inputs
 
-        printPeakColumns(matrix);
 
+        System.out.println((printPeakColumns(matrix) == null) ? "There are no peak columns in the matrix given" : printPeakColumns(matrix));
+
+
+    }
+
+    // Helper function to check if a value is zero or negative
+    private static boolean isAPositiveInteger(int value) {
+        return value > 0;
+    }
+
+    // Helper function to ensure the number of rows and columns are positive.
+    private static int checkDimensionValidity(Scanner scanner, String prompt) {
+        int value;
+        while (true) {
+            value = getInput(scanner, prompt);
+            if (isAPositiveInteger(value))
+                break;
+            else
+                System.out.println("Value must be positive.");
+        }
+        return value;
     }
 
     // Function to accept input from user and return it.
@@ -42,14 +68,16 @@ public class Main {
         }
     }
 
-    private static void printPeakColumns(int[][] matrix) {
+    // Function to check and print the peak columns (values)
+    private static String printPeakColumns(int[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                if (isPeakColumn(matrix, i, j)) {
-                    System.out.println("(" + (i + 1) + "," + (j + 1) + ") = " + getValue(matrix, i, j));
-                }
+                if (isPeakColumn(matrix, i, j))
+                    return "(" + (i + 1) + "," + (j + 1) + ") = " + getValue(matrix, i, j);
+
             }
         }
+        return null;
     }
 
     // helper function to find maximum value in an array
@@ -90,19 +118,19 @@ public class Main {
     }
 
     // helper function to extract the column for a matrix by index
-    private static int[] extractColumn(int[][] matrix, int index) {
+    private static int[] extractColumn(int[][] matrix, int columnIndex) {
         int[] column = new int[matrix.length];
         // Loop over the rows and get the values of the column index
         for (int i = 0; i < matrix.length; i++)
             // Add the values to the column array at index i
-            column[i] = matrix[i][index];
+            column[i] = matrix[i][columnIndex];
 
         return column;
     }
 
 
-    private static int[] getRow(int[][] matrix, int index) {
-        return matrix[index];
+    private static int[] getRow(int[][] matrix, int rowIndex) {
+        return matrix[rowIndex];
     }
 
     //Helper method to check if a value at an index is a peak column. Returns true if it is and false if it is not
